@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.3//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+    
+    <mapper namespace="com.wa.xwolf.sblog.dao.TagDao">
+    
+      <insert id="saveTag" parameterType="java.util.Map" statementType="PREPARED">
+      
+       insert into xwolf_tag(descr,name)values(#{desc} , #{name})
+       
+      </insert>
+      
+      <delete id="deleteTag" parameterType="Integer" >
+      delete from xwolf_tag where id=#{id}
+      </delete>
+      
+      <select id="findTags" resultMap="TagMap" parameterType="java.util.Map">
+        select * from xwolf_tag limit #{page},#{pageSize}
+      </select>
+      
+      <select id="findTotal" resultType="Integer" parameterType="java.util.Map">
+      select count(*) from xwolf_tag 
+      </select>
+     
+     <resultMap type="Tag" id="TagMap">
+      <id column="id" property="id"/>
+      <result column="name" property="name"/>
+      <result column="descr" property="desc"/>
+     </resultMap>
+     
+     <select id="findById" parameterType="Integer" resultMap="TagMap" statementType="PREPARED">
+     select * from xwolf_tag where id=#{id}
+     </select>
+     
+     <update id="updateTag" parameterType="Tag">
+     update xwolf_tag set name=#{name},descr=#{desc} where id=#{id}
+     </update>
+     
+     
+     <select id="findTagTree" resultMap="TagMap">
+     select * from xwolf_tag
+     </select>
+    
+    </mapper>

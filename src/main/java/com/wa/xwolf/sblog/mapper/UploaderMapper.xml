@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.3//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+    
+    <mapper namespace="com.wa.xwolf.sblog.dao.UploaderDao">
+       
+       <insert id="upload" parameterType="Uploader" statementType="PREPARED">
+       insert into xwolf_uploader (FILE_NAME,FILE_PATH,UPLOAD_TIME,REMARK) values 
+       (#{fileName},#{filePath},#{uploadTime},#{remark})
+       </insert>
+      
+    </mapper>

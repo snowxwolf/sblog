@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.3//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+   
+
+   <mapper namespace="com.wa.xwolf.sblog.dao.UserDao">
+   
+   
+      <insert id="addUser" parameterType="User" statementType="PREPARED">
+         insert into xwolf_user(id,username,passwd,REG_IP,reg_DATE) values(#{id},#{username},#{pwd},#{regip},#{regtime})
+      </insert>
+      
+      <select id="getUser" parameterType="java.util.Map" resultMap="userRstMap">
+      select * from xwolf_user where username =#{name} and passwd=#{pwd}
+      </select>
+      
+      <resultMap type="User" id="userRstMap">
+      <result column="id" property="id"/>
+      <result column="username" property="username"/>
+      <result column="passwd"  property="pwd"/>
+      <result column="REG_DATE" property="regtime" />
+      <result column="REG_IP" property="regip"/>
+      <result column="LAST_LOGIN_TIME" property="lastLoginTime"/>
+      <result column="REMARK" property="remark"/>
+      <result column="STATUS" property="status"/>
+      </resultMap>
+      
+   </mapper> 
