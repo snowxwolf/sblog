@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wa.xwolf.sblog.bean.Menu;
-import com.wa.xwolf.sblog.dao.MenuDao;
+import com.wa.xwolf.sblog.service.MenuService;
 
 @Controller
 @RequestMapping("/menu")
@@ -28,7 +28,7 @@ public class MenuController {
 	private Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
-	 private MenuDao menuDao;
+	 private MenuService menuService;
 	  
 	@RequestMapping("/menuList")
      public String toMenuList(){
@@ -38,7 +38,7 @@ public class MenuController {
 	public void findAllMenus
 	     (HttpServletRequest request,HttpServletResponse response,Writer writer){
 		
-		List<Menu> parentMenus =menuDao.findAllParentMenu();
+		List<Menu> parentMenus =menuService.findAllParentMenu();
 		JSONObject obj = new JSONObject();
 		JSONArray ary= new JSONArray();
 		for (int i=0;i<parentMenus.size();i++){
@@ -48,7 +48,7 @@ public class MenuController {
 			obj1.put("name", parentMenu.getMenuName());
 			obj1.put("icon", parentMenu.getIcon());
 			obj1.put("url",parentMenu.getUrl());
-			List<Menu> sonMenus = menuDao.findAllSonMenu(parentMenu.getId());
+			List<Menu> sonMenus = menuService.findAllSonMenu(parentMenu.getId());
 			JSONArray ary2 = new JSONArray();
 			for (int j=0;j<sonMenus.size();j++){
 				Menu sonMenu = sonMenus.get(j); 
@@ -80,7 +80,7 @@ public class MenuController {
 	public void findAllMenusTree
 	     (HttpServletRequest request,HttpServletResponse response,Writer writer){
 		
-		List<Menu> parentMenus =menuDao.findAllParentMenu();
+		List<Menu> parentMenus =menuService.findAllParentMenu();
 		JSONObject obj = new JSONObject();
 		JSONArray ary= new JSONArray();
 		for (int i=0;i<parentMenus.size();i++){
@@ -91,7 +91,7 @@ public class MenuController {
 			obj1.put("icon", parentMenu.getIcon());
 			obj1.put("url",parentMenu.getUrl());
 			obj1.put("createTime", parentMenu.getCreateTime());
-			List<Menu> sonMenus = menuDao.findAllSonMenu(parentMenu.getId());
+			List<Menu> sonMenus = menuService.findAllSonMenu(parentMenu.getId());
 			JSONArray ary2 = new JSONArray();
 			for (int j=0;j<sonMenus.size();j++){
 				Menu sonMenu = sonMenus.get(j); 
@@ -127,7 +127,7 @@ public class MenuController {
 		log.info("删除菜单项,菜单ID为"+id);
 		JSONObject object = new JSONObject();
 		try {
-			menuDao.deleteById(id);
+			menuService.deleteById(id);
 			object.put("success",true);
 			object.put("msg","菜单项删除成功");
 		} catch (Exception e) {
@@ -161,7 +161,7 @@ public class MenuController {
 		
 		try {
 			
-			List<Menu> menus = menuDao.findAllParentMenu();
+			List<Menu> menus = menuService.findAllParentMenu();
 			JSONArray ary = new JSONArray();
 			JSONObject obj = new JSONObject();
 			obj.put("id",0);
@@ -198,7 +198,7 @@ public class MenuController {
 		menu.setUrl(url);
 		JSONObject object = new JSONObject();
 		try {
-			menuDao.addMenu(menu);
+			menuService.addMenu(menu);
 			object.put("success",true);
 			object.put("msg","菜单项添加成功");
 		} catch (Exception e) {
@@ -221,7 +221,7 @@ public class MenuController {
 	@RequestMapping("/updateMenu")
 	public ModelAndView updateMenu(@RequestParam("id")String id,Model model,HttpServletRequest request){
 		ModelAndView view = new ModelAndView();
-		Menu menu = menuDao.findById(Integer.parseInt(id));
+		Menu menu = menuService.findById(Integer.parseInt(id));
 		model.addAttribute("menu",menu);
 		view.setViewName("menu/menu_update");
 		return view;
@@ -246,7 +246,7 @@ public class MenuController {
 		menu.setId(Integer.parseInt(id));
 		JSONObject object = new JSONObject();
 		try {
-			menuDao.updateMenu(menu);
+			menuService.updateMenu(menu);
 			object.put("success",true);
 			object.put("msg","菜单项更新成功");
 		} catch (Exception e) {

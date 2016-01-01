@@ -3,9 +3,11 @@ package com.wa.xwolf.sblog.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import com.wa.xwolf.sblog.bean.Diary;
 
-
+@Repository
 public interface DiaryDao {
 	
 	public void saveDiary(Map<String,Object> map);

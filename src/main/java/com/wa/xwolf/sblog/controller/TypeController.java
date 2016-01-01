@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wa.xwolf.sblog.bean.Type;
-import com.wa.xwolf.sblog.dao.TypeDao;
+import com.wa.xwolf.sblog.service.TypeService;
 
 @Controller
 @RequestMapping("/type")
@@ -26,7 +26,7 @@ public class TypeController {
 	private Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
-	private TypeDao typeDao;
+	private TypeService typeService;
 	/**
 	 * 到文章类别列表
 	 * @return
@@ -48,7 +48,7 @@ public class TypeController {
 	 */
 	@RequestMapping("/typeList")
 	public void typeList(HttpServletRequest request,Writer writer){
-		List<Type> parentTypes =typeDao.findParentTypes();
+		List<Type> parentTypes =typeService.findParentTypes();
 		JSONObject obj = new JSONObject();
 		JSONArray ary= new JSONArray();
 		for (int i=0;i<parentTypes.size();i++){
@@ -58,7 +58,7 @@ public class TypeController {
 			obj1.put("name", parentType.getName());
 			obj1.put("descr", parentType.getDescr());
 			obj1.put("parentId",parentType.getParentId());
-			List<Type> sonTypes =typeDao.findAllSonType(parentType.getId());
+			List<Type> sonTypes =typeService.findAllSonType(parentType.getId());
 			JSONArray ary2 = new JSONArray();
 			for (int j=0;j<sonTypes.size();j++){
 				Type sonType = sonTypes.get(j); 
@@ -88,7 +88,7 @@ public class TypeController {
 	 */
 	@RequestMapping("/getParentType")
 	public void getParentType(HttpServletRequest request,Writer writer){
-		List<Type> parentTypes =typeDao.findParentTypes();
+		List<Type> parentTypes =typeService.findParentTypes();
 		JSONArray ary = new JSONArray();
 		JSONObject obj = new JSONObject();
 		obj.put("id",0);
@@ -125,7 +125,7 @@ public class TypeController {
 		type.setParentId(Integer.parseInt(parentId));
 		JSONObject object = new JSONObject();
 		try {
-			typeDao.saveType(type);
+			typeService.saveType(type);
 			object.put("result",true);
 			object.put("msg","文章类别添加成功");
 		} catch (Exception e) {
@@ -149,7 +149,7 @@ public class TypeController {
 		String id = request.getParameter("id");
 		JSONObject object = new JSONObject();
 		try {
-			typeDao.deleteType(Integer.parseInt(id));
+			typeService.deleteType(Integer.parseInt(id));
 			object.put("result",true);
 			object.put("msg","文章类别删除成功");
 		} catch (NumberFormatException e) {
@@ -172,7 +172,7 @@ public class TypeController {
 	@RequestMapping("/toUpdateType")
 	public ModelAndView toUpdateType(@RequestParam("id")String id,Model model){
 		ModelAndView view = new ModelAndView();
-		Type type = typeDao.findById(Integer.parseInt(id));
+		Type type = typeService.findById(Integer.parseInt(id));
 		model.addAttribute("type",type);
 		view.setViewName("type/type_update");
 		return view;
@@ -194,7 +194,7 @@ public class TypeController {
 		type.setId(Integer.parseInt(id));
 		JSONObject object = new JSONObject();
 		try {
-			typeDao.updateType(type);
+			typeService.updateType(type);
 			object.put("result",true);
 			object.put("msg","文章类别更新成功");
 		} catch (Exception e) {

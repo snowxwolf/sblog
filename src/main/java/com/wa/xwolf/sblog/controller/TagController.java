@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wa.xwolf.sblog.bean.Tag;
-import com.wa.xwolf.sblog.dao.TagDao;
+import com.wa.xwolf.sblog.service.TagService;
 
 @Controller
 @RequestMapping("/tag")
 public class TagController {
 	private Logger log = Logger.getLogger(this.getClass());
 	@Autowired
-	private TagDao tagDao;
+	private TagService tagService;
 	/**
 	 *到 标签列表 
 	 * @return
@@ -48,8 +48,8 @@ public class TagController {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("page", (Integer.parseInt(page)-1)*Integer.parseInt(rows));
 			map.put("pageSize", Integer.parseInt(rows));
-			List<Tag> list =tagDao.findTags(map);
-			int total =tagDao.findTotal(map);
+			List<Tag> list =tagService.findTags(map);
+			int total =tagService.findTotal(map);
 			JSONObject object = new JSONObject();
 			object.put("page", page);
 			object.put("rows", list);
@@ -67,7 +67,7 @@ public class TagController {
 	 */
 	@RequestMapping("/toTagDetail")
 	public String toDetail (@RequestParam("id")String id,Model model){
-		Tag tag = tagDao.findById(Integer.parseInt(id));
+		Tag tag = tagService.findById(Integer.parseInt(id));
 		model.addAttribute("tag",tag);
 		return "tag/tag_view";
 	}
@@ -93,7 +93,7 @@ public class TagController {
 		map.put("name",name);
 		map.put("desc", desc);
 		try {
-			tagDao.saveTag(map);
+			tagService.saveTag(map);
 			object.put("result",true);
 			object.put("msg","标签添加成功");
 		} catch (Exception e) {
@@ -116,7 +116,7 @@ public class TagController {
 	public void deleteTag(@RequestParam("id")String id,Writer writer){
 		JSONObject object = new JSONObject();
 		try {
-			tagDao.deleteTag(Integer.parseInt(id));
+			tagService.deleteTag(Integer.parseInt(id));
 			object.put("result",true);
 			object.put("msg","标签删除成功");
 		} catch (NumberFormatException e) {
@@ -139,7 +139,7 @@ public class TagController {
 	 */
 	@RequestMapping("/toUpdateTag")
 	public String toUpdateTag (@RequestParam("id")String id,Model model){
-		Tag tag = tagDao.findById(Integer.parseInt(id));
+		Tag tag = tagService.findById(Integer.parseInt(id));
 		model.addAttribute("tag",tag);
 		return "tag/tag_update";
 	}
@@ -160,7 +160,7 @@ public class TagController {
 		map.put("name",name);
 		map.put("desc",desc);
 		try {
-			tagDao.updateTag(map);
+			tagService.updateTag(map);
 			object.put("result",true);
 			object.put("msg","标签更新成功");
 		} catch (Exception e) {
@@ -184,7 +184,7 @@ public class TagController {
 	@RequestMapping("/findTagTree")
 	public void getTagTree(HttpServletRequest request,HttpServletResponse response,Writer writer){
 		
-		List<Tag> list = tagDao.findTagTree();
+		List<Tag> list = tagService.findTagTree();
 		JSONArray ary = new JSONArray();
 		for(Tag tag : list){
 			JSONObject obj = new JSONObject();

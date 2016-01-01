@@ -212,11 +212,11 @@ http://repository.apache.org/snapshots/</url>
 			<version>1.2</version>
 		</dependency>
 		
-		<dependency>
+		<!-- <dependency>
 	<groupId>javax.servlet.jsp</groupId>
 	<artifactId>jsp-api</artifactId>
 	<version>2.2</version>
-</dependency>
+</dependency> -->
 		
 		
 		<dependency>
@@ -239,7 +239,7 @@ http://repository.apache.org/snapshots/</url>
 
 <!--CXF  -->
 
-<dependency>
+<!-- <dependency>
 	<groupId>org.apache.cxf</groupId>
 	<artifactId>cxf-core</artifactId>
 	<version>3.1.4</version>
@@ -250,13 +250,13 @@ http://repository.apache.org/snapshots/</url>
 	<artifactId>cxf-rt-frontend-jaxws</artifactId>
 	<version>3.1.4</version>
 </dependency>
-
-
+ -->
+<!-- 
 <dependency>
 	<groupId>org.apache.cxf</groupId>
 	<artifactId>cxf-api</artifactId>
 	<version>${cxf.version></version>
-</dependency>
+</dependency> -->
 
 		
 		

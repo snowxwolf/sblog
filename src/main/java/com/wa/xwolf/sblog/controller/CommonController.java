@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wa.xwolf.sblog.bean.User;
-import com.wa.xwolf.sblog.dao.UserDao;
+import com.wa.xwolf.sblog.service.UserService;
 import com.wa.xwolf.sblog.util.CommonUtils;
 import com.wa.xwolf.sblog.util.DESUtil;
 import com.wa.xwolf.sblog.util.UUIDUtils;
@@ -31,7 +31,7 @@ import com.wa.xwolf.sblog.util.UUIDUtils;
 public class CommonController {
 	
 	@Autowired
-	UserDao userDao;
+	private UserService userService;
 	
 	private Logger log = Logger.getLogger(CommonController.class);
 	/**
@@ -62,7 +62,7 @@ public class CommonController {
 		JSONObject object = new JSONObject() ;
 		
 		try {
-			userDao.addUser(user);
+			userService.addUser(user);
 			object.put("success",true);
 			log.info(name+"在"+new Date()+"注册成功！");
 		} catch (Exception e) {
@@ -107,9 +107,9 @@ public class CommonController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("name", name);
 		map.put("pwd", DESUtil.getEncryptString(password));
-		User user = userDao.getUser(map);
+		User user = userService.getUser(map);
 		JSONObject object = new JSONObject() ;
-		System.out.println("登录的用户:"+user);
+		log.info("登录的用户:"+user);
 		if(user==null){
 			object.put("success",false);
 		}else{

@@ -2,8 +2,10 @@ package com.wa.xwolf.sblog.dao;
 
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
 
 
+@Repository
 public interface ContentDao {
 	
 	//保存内容

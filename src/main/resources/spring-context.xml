@@ -20,16 +20,20 @@
 		</property>
 	</bean>
 
-		<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
-		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/sblog?characterEncoding=UTF-8"/>
-        <property name="username" value="blog"/>
-        <property name="password" value="xwolf@blog"/>
-       
-    	
+		<!-- 配置数据源，并设置连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<!-- 设置数据库连接参数 -->
+		<property name="url" value="jdbc:mysql://localhost:3306/sblog?useUnicode=true" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="username" value="blog" />
+		<property name="password" value="xwolf@blog" />
+		<!-- 设置连接池参数 -->
+		<property name="initialSize" value="10" />
+		<property name="maxActive" value="100" />
+		<!-- <property name="maxIdle" value="${maxIdleTime}"/> -->
+		<property name="filters" value="stat" />
 	</bean>
-
-
+       
    	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:config.xml"></property>
@@ -52,21 +56,25 @@
     	<property name="dataSource" ref="dataSource"></property> 
     </bean>
 
-	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">
+	 <tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="count*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="list*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="*" propagation="REQUIRED"/>
+		<tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+		<tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+		<tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+		<tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Exception" />
+			<tx:method name="count*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Exception"/>
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Exception"/>
+			<tx:method name="list*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Exception"/>
+			<tx:method name="*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
 		</tx:attributes>
 	</tx:advice>
 
 	<aop:config expose-proxy="true">
 		<aop:pointcut id="txPointcut" 
-			expression="execution(* com.wa.xwolf.sblog.*.service.*Service.*(..))" />
+			expression="execution(* com.wa.xwolf.sblog.service.*Service.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
-	</aop:config> -->
+	</aop:config>
 	
 	<!-- <context:component-scan base-package="com.wa.*" use-default-filters="false">
 		<context:include-filter type="regex" expression="com.wa.xwolf.sblog.service.*"/>

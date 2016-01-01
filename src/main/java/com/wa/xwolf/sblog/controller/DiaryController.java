@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wa.xwolf.sblog.bean.Diary;
-import com.wa.xwolf.sblog.dao.DiaryDao;
+import com.wa.xwolf.sblog.service.DiaryService;
 
 /**
  * @author xwolf
@@ -39,7 +39,7 @@ public class DiaryController {
 	Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
-	private DiaryDao diaryDao;
+	private DiaryService diaryService;
 	/**
 	 * 到日记列表页面
 	 * @return
@@ -67,7 +67,7 @@ public class DiaryController {
 		map.put("time", new Date());
 		map.put("weather", weather);
 		map.put("content", blob);
-		diaryDao.saveDiary(map);
+		diaryService.saveDiary(map);
 		object.put("result",true);
 		object.put("msg","日记添加成功");
 	} catch (Exception e) {
@@ -90,7 +90,7 @@ public class DiaryController {
 		
 		JSONObject object = new JSONObject();
 		try {
-			diaryDao.deleteDiary(Integer.parseInt(id));
+			diaryService.deleteDiary(Integer.parseInt(id));
 			log.info("逻辑删除日记成功");
 			object.put("result",true);
 			object.put("msg","日记删除成功");
@@ -116,7 +116,7 @@ public class DiaryController {
 		
 		JSONObject object = new JSONObject();
 		try {
-			diaryDao.deleteDiarys(Integer.parseInt(id));
+			diaryService.deleteDiarys(Integer.parseInt(id));
 			log.info("彻底删除日记成功");
 			object.put("result",true);
 			object.put("msg","彻底日记删除成功");
@@ -139,7 +139,7 @@ public class DiaryController {
 	 */
 	@RequestMapping("/toView")
 	public String toView(@RequestParam("id")String id,Model model){
-		Map<String, Object > map= diaryDao.findById(Integer.parseInt(id));
+		Map<String, Object > map= diaryService.findById(Integer.parseInt(id));
 		String content = new String((byte[])map.get("content"));
 		model.addAttribute("title", map.get("title"));
 		model.addAttribute("weather", map.get("weather"));
@@ -155,7 +155,7 @@ public class DiaryController {
 	 */
 	@RequestMapping("/toUpdate")
 	public String toEditor(@RequestParam("id")String id,Model model){
-		Map<String, Object > map= diaryDao.findById(Integer.parseInt(id));
+		Map<String, Object > map= diaryService.findById(Integer.parseInt(id));
 		String content = new String((byte[])map.get("content"));
 		model.addAttribute("id", map.get("id"));
 		model.addAttribute("title", map.get("title"));
@@ -179,8 +179,8 @@ public class DiaryController {
 		map.put("title","%"+title+"%");
 		map.put("page", (Integer.parseInt(page)-1)*Integer.parseInt(rows));
 		map.put("pageSize", Integer.parseInt(rows));
-		int total = diaryDao.findTotal(map);
-		List<Diary> list = diaryDao.finDiaries(map);
+		int total = diaryService.findTotal(map);
+		List<Diary> list = diaryService.finDiaries(map);
 		JSONObject object = new JSONObject();
 		object.put("rows",list);
 		object.put("total",total);
@@ -221,7 +221,7 @@ public class DiaryController {
 		map.put("weather", weather);
 		map.put("content", blob);
 		map.put("id", Integer.parseInt(id));
-		diaryDao.updateDiary(map);
+		diaryService.updateDiary(map);
 		object.put("result",true);
 		object.put("msg","日记添加成功");
 	} catch (Exception e) {

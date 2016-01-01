@@ -1,7 +1,7 @@
 <%@page import="java.net.InetAddress"%>
 <%@page import="java.util.Properties"%>
 <%@page contentType="text/html; charset=utf-8" 
-language="java" pageEncoding="utf-8"%>
+language="java" pageEncoding="utf-8" isELIgnored="false"%>
 <html>
    <head>
       <title>监控-服务器信息</title>

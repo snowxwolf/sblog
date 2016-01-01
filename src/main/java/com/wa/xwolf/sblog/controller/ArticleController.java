@@ -18,19 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
-
-
-
-
-
-
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wa.xwolf.sblog.bean.Article;
-import com.wa.xwolf.sblog.dao.ArticleDao;
+import com.wa.xwolf.sblog.service.ArticleService;
 
 @Controller
 @RequestMapping("/article")
@@ -39,7 +31,7 @@ public class ArticleController {
 	private Logger log = Logger.getLogger(this.getClass());
 	
 	@Autowired
-	private ArticleDao articleDao;
+	private ArticleService articleService;
 	/**
 	 * 文章列表页面
 	 * @return
@@ -86,7 +78,7 @@ public class ArticleController {
 			map.put("url", url);
 			map.put("type",type);
 			map.put("status","0");
-	        articleDao.addArticle(map);
+	        articleService.addArticle(map);
 	        object.put("result", true);
 	        object.put("msg","添加新文章成功");
 		} catch (Exception e) {
@@ -134,8 +126,8 @@ public class ArticleController {
 		map.put("pageSize",pageSize);
 		System.out.println("当前页面：========"+page);
 		try {
-			List<Article> list = articleDao.findArticles(map);
-			int total = articleDao.findTotal(map);
+			List<Article> list = articleService.findArticles(map);
+			int total = articleService.findTotal(map);
 			JSONObject object = new JSONObject();
 			object.put("page", page);
 			object.put("rows",list);
@@ -157,7 +149,7 @@ public class ArticleController {
 	public ModelAndView getContentById(HttpServletRequest request,Writer writer,Model model){
 		String id = request.getParameter("id");
 		ModelAndView view = new ModelAndView();
-		Map<String,Object> map = articleDao.getContentById(Integer.parseInt(id));
+		Map<String,Object> map = articleService.getContentById(Integer.parseInt(id));
 		String content = new String((byte[])map.get("content"));
 		model.addAttribute("content",content);
 		model.addAttribute("author",map.get("author"));
@@ -179,7 +171,7 @@ public class ArticleController {
 		public ModelAndView toupdate(HttpServletRequest request,Writer writer,Model model){
 			String id = request.getParameter("id");
 			ModelAndView view = new ModelAndView();
-			Map<String,Object> map = articleDao.getContentById(Integer.parseInt(id));
+			Map<String,Object> map = articleService.getContentById(Integer.parseInt(id));
 			String content = new String((byte[])map.get("content"));
 			model.addAttribute("id",map.get("id"));
 			model.addAttribute("content",content);
@@ -222,7 +214,7 @@ public class ArticleController {
 				map.put("type",type);
 				map.put("status","0");
 				map.put("id",Integer.parseInt(id));
-		        articleDao.updateArticle(map);
+		        articleService.updateArticle(map);
 		        object.put("result", true);
 		        object.put("msg","更新文章成功");
 			} catch (Exception e) {

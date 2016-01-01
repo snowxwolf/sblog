@@ -1,6 +1,8 @@
 package com.wa.xwolf.sblog.service;
 
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,4 +25,11 @@ public class UserService {
 		System.out.println("userDao():"+user);
 	}
 
+	public User getUser(User user){
+		return userDao.getUser(user);
+	}
+    
+	public User getUser(Map<String, String> map){
+		return userDao.getUser(map);
+	}
 }

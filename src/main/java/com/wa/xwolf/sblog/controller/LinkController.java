@@ -2,9 +2,7 @@ package com.wa.xwolf.sblog.controller;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,8 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wa.xwolf.sblog.bean.Link;
-import com.wa.xwolf.sblog.bean.Menu;
-import com.wa.xwolf.sblog.dao.LinkDao;
+import com.wa.xwolf.sblog.service.LinkService;
 /**
  * 友情链接
  * @author xwolf
@@ -35,7 +31,7 @@ public class LinkController {
 	private Logger logger = Logger.getLogger(this.getClass());
 	
 	@Autowired
-	private LinkDao linkDao;
+	private LinkService linkService;
 	/**
 	 * 到友情链接列表页面
 	 * @return
@@ -51,7 +47,7 @@ public class LinkController {
 	 */
 	@RequestMapping("/linkList")
 	public void linkList(HttpServletRequest request,Writer writer){
-		List<Link> parentLinks=linkDao.findAllParentLink();
+		List<Link> parentLinks=linkService.findAllParentLink();
 		JSONObject obj = new JSONObject();
 		JSONArray ary= new JSONArray();
 		for (int i=0;i<parentLinks.size();i++){
@@ -64,7 +60,7 @@ public class LinkController {
 			obj1.put("status", parentLink.getStatus());
 			obj1.put("id", parentLink.getId());
 			
-			List<Link> childLinks = linkDao.findChildLink(parentLink.getId());
+			List<Link> childLinks = linkService.findChildLink(parentLink.getId());
 			JSONArray ary2 = new JSONArray();
 			for (int j=0;j<childLinks.size();j++){
 				JSONObject obj2 = new JSONObject();
@@ -119,7 +115,7 @@ public class LinkController {
 		link.setType(type);
 		JSONObject object = new JSONObject();
 		try {
-			linkDao.addLink(link);
+			linkService.addLink(link);
 			object.put("success",true);
 			object.put("msg","链接添加成功");
 			logger.info(url+", 添加成功 !");
@@ -149,7 +145,7 @@ public class LinkController {
 		logger.info("删除菜单项,菜单ID为"+id);
 		JSONObject object = new JSONObject();
 		try {
-			linkDao.deleteLink(Integer.parseInt(id));
+			linkService.deleteLink(Integer.parseInt(id));
 			object.put("success",true);
 			object.put("msg","链接删除成功");
 		} catch (Exception e) {
@@ -173,7 +169,7 @@ public class LinkController {
 	@RequestMapping("/toUpdateLink")
 	public ModelAndView toUpdateLink(@RequestParam("id") String id,Model model){
 		ModelAndView view = new ModelAndView();
-		Link link = linkDao.findById(Integer.parseInt(id));
+		Link link = linkService.findById(Integer.parseInt(id));
 		view.setViewName("link/updateLink");
 		model.addAttribute("link",link);
 		return view;
@@ -204,7 +200,7 @@ public class LinkController {
 		link.setId(Integer.parseInt(id));
 		JSONObject object = new JSONObject();
 		try {
-			linkDao.updateLink(link);
+			linkService.updateLink(link);
 			object.put("success",true);
 			object.put("msg","链接更新成功");
 			logger.info(url+", 更新成功 !");
@@ -228,7 +224,7 @@ public class LinkController {
 	public void getParentLink(Writer writer){
 try {
 			
-			List<Link> links = linkDao.findAllParentLink();
+			List<Link> links = linkService.findAllParentLink();
 			JSONArray ary = new JSONArray();
 			JSONObject obj = new JSONObject();
 			obj.put("id",0);

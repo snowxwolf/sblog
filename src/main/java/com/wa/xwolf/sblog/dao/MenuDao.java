@@ -2,8 +2,11 @@ package com.wa.xwolf.sblog.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.wa.xwolf.sblog.bean.Menu;
 
+@Repository
 public interface MenuDao {
 	
 	public List<Menu> findAllMenus();

@@ -91,4 +91,18 @@ CREATE TABLE `sblog`.`xwolf_uploader`(
   PRIMARY KEY (`ID`)
 ) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--菜单表
+CREATE TABLE `sblog`.`xwolf_menu`(  
+  `ID` INT(15) NOT NULL AUTO_INCREMENT,
+  `parent_menu_id` INT(15) NOT NULL COMMENT '上一级菜单',
+  `menu_name` VARCHAR(50) COMMENT '菜单名称',
+  `url` VARCHAR(1500) COMMENT '对应URL',
+  `icon` VARCHAR(100) COMMENT '对应图标',
+  `create_time` DATETIME COMMENT '创建时间',
+  `update_time` DATETIME COMMENT '更新时间',
+  `create_user_id` VARCHAR(25) COMMENT '创建人',
+  `update_user_id` VARCHAR(25) COMMENT '更新人',
+  PRIMARY KEY (`ID`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
+
   
