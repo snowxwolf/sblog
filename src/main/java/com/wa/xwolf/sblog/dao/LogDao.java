@@ -1,9 +1,10 @@
 package com.wa.xwolf.sblog.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
-import com.sun.tools.javac.util.List;
-import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
 import com.wa.xwolf.sblog.bean.Log;
 
 

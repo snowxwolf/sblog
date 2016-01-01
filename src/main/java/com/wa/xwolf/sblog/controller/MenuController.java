@@ -198,6 +198,7 @@ public class MenuController {
 		menu.setUrl(url);
 		JSONObject object = new JSONObject();
 		try {
+			log.info("添加的菜单为:{}"+menu);
 			menuService.addMenu(menu);
 			object.put("success",true);
 			object.put("msg","菜单项添加成功");

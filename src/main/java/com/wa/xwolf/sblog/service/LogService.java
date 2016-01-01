@@ -1,10 +1,11 @@
 package com.wa.xwolf.sblog.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sun.tools.javac.util.List;
-import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
 import com.wa.xwolf.sblog.bean.Log;
 import com.wa.xwolf.sblog.dao.LogDao;
 
