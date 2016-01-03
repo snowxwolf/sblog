@@ -63,9 +63,9 @@
 	if (r){
 		$.post("${pageContext.request.contextPath}/menu/deleteMenuById.htm",{id:id},function(data){
 			if (data.sucess){
-			$.messager.alert("info",data.msg);
+			$.messager.alert('提示',data.msg,'info');
 			}else{
-				$.messager.alert("info",data.msg);
+				$.messager.alert("提示",data.msg,"info");
 			}
 			$("#tt").treegrid("reload");
 		},"json");

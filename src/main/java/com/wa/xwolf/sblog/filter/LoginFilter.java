@@ -40,7 +40,7 @@ public class LoginFilter implements Filter {
            
           User user = (User) session.getAttribute("user");
           String url = request.getRequestURL().toString();
-          System.out.println("请求的url为:"+url);
+          logger.info("请求的url为:{}"+url);
           boolean isPass = false;
           if (url.endsWith(".gif")||url.endsWith(".css")||url.endsWith(".jpg")||
         		  url.endsWith(".js")|| url.endsWith(".bmp")||url.endsWith(".png")){

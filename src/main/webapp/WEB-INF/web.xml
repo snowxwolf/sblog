@@ -62,7 +62,7 @@
     </listener> 
     
     <!-- 登录过滤器 -->
-   <!--     <filter>
+      <filter>
 	   <filter-name>login</filter-name>
 	   <filter-class>
 	   com.wa.xwolf.sblog.filter.LoginFilter
@@ -72,7 +72,7 @@
 	 <filter-mapping>
 	 <filter-name>login</filter-name>
 	 <url-pattern>/*</url-pattern>
-	 </filter-mapping>   -->
+	 </filter-mapping>  
 	 
 	<filter>
 		<filter-name>encoding</filter-name>
@@ -103,21 +103,18 @@
     
     
     <!-- 错误页面处理 -->
-<!--     <error-page>
+    <error-page>
      <error-code>500</error-code>
-     <exception-type>java.lang.Exception</exception-type>
-     <location>/exception/500.jsp</location>
+     <location>/WEB-INF/jsp/exception/500.jsp</location>
     </error-page> 
     
     <error-page>
      <error-code>403</error-code>
-     <exception-type>java.lang.Exception</exception-type>
-     <location>/exception/403.jsp</location>
+     <location>/WEB-INF/jsp/exception/403.jsp</location>
     </error-page>
     
     <error-page>
      <error-code>404</error-code>
-     <exception-type>java.lang.Exception</exception-type>
-     <location>/exception/404.jsp</location>
-    </error-page>   -->
+     <location>/WEB-INF/jsp/exception/404.jsp</location>
+    </error-page>   
 </web-app>
