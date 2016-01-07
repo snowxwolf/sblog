@@ -30,7 +30,7 @@
          <td>天气情况:</td>
          <td><input type="text" id="weather" value="${weather}"></td>
         <td>作者:</td>
-         <td><input id="author" value="${author }"></td>
+         <td><input id="author" value="${author}" disabled="disabled"></td>
          
         </tr>
       
@@ -70,9 +70,10 @@
     			function(data){
     				
     				if (data.result){
-    					$.messager.alert("info",data.msg);
+    					$.messager.alert("提示",data.msg,"info");
+    					window.close();
     				}else{
-    					$.messager.alert("info",data.msg);
+    					$.messager.alert("提示",data.msg,"error");
     				}
     				
     			},

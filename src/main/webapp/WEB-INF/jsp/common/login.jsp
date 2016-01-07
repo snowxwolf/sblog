@@ -75,14 +75,14 @@
           <tr>
            <td>用户名:</td>
            <td>
-            <input type="text" class="easyui-validatebox" name="name" required="true" data-options="validType:length[0,100]">
+            <input type="text" class="easyui-validatebox" name="name" required="true" missingMessage="用户名不能为空" data-options="validType:length[0,100]">
            </td>
           </tr>
           
            <tr>
            <td>密码:</td>
            <td>
-            <input type="password" class="easyui-validatebox" name="pwd" required="true" data-options="validType:length[0,100]">
+            <input type="password" class="easyui-validatebox" name="pwd" required="true" missingMessage="密码不能为空" data-options="validType:length[0,100]">
            </td>
           </tr>
           

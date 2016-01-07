@@ -185,13 +185,13 @@ public class MenuController {
 	 * 添加菜单
 	 */
 	@RequestMapping("/addMenu")
-	public void addMenu(@RequestParam String name,@RequestParam String url,
-			@RequestParam String icon,@RequestParam String parentId,Writer writer){
+	public void addMenu(HttpServletRequest request,Writer writer) throws Exception{
+		request.setCharacterEncoding("utf-8");
 		Menu menu = new Menu();
-	//	String parentId = request.getParameter("parentId");
-		//String name = request.getParameter("name");
-		//String url = request.getParameter("url");
-	//	String icon = request.getParameter("icon");
+		String parentId = request.getParameter("parentId");
+		String name = request.getParameter("name");
+		String url = request.getParameter("url");
+		String icon = request.getParameter("icon");
 		menu.setCreateTime(new Date());
 		menu.setParentMenuId(Integer.parseInt(parentId));
 		menu.setMenuName(name);

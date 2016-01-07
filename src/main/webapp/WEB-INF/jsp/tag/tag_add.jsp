@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" isELIgnored="false"s%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,12 +17,12 @@
 	 var desc = $("#desc").val();
 	 if (name==null||name==''){
 		 
-		 $.messager.alert("warning","标签名称不能为空");
+		 $.messager.alert("提示","标签名称不能为空","warning");
 		 return ;
 	 }
     if (desc==null||desc ==''){
 		 
-		 $.messager.alert("warning","标签描述不能为空");
+		 $.messager.alert("提示","标签描述不能为空","warning");
 		 return ;
 	 }
     
@@ -35,10 +35,10 @@
     	success:function(info){
     		var data = eval('('+info+')');
     		if (data.result){
-        		$.messager.alert("info",data.msg);
+        		$.messager.alert("提示",data.msg,"info");
         		window.location.href="${pageContext.request.contextPath}/tag/toTagList.htm";
         	}else{
-        		$.messager.alert("info",data.msg);
+        		$.messager.alert("提示",data.msg,"error");
         	}
     	}
     });
