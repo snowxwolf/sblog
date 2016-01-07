@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
@@ -208,6 +209,43 @@ public class TypeController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		
+	}
+	/**
+	 * 获取文章分类树形结构
+	 */
+	@RequestMapping("/getTypeTree")
+	@ResponseBody
+	public void getTypeTree(Writer writer){
+		List<Type> parentTypes =typeService.findParentTypes();
+		JSONObject obj = new JSONObject();
+		JSONArray ary= new JSONArray();
+		for (int i=0;i<parentTypes.size();i++){
+			JSONObject obj1 = new JSONObject();
+			Type parentType = parentTypes.get(i);
+			obj1.put("id", parentType.getId());
+			obj1.put("text", parentType.getName());
+			List<Type> sonTypes = typeService.findAllSonType(parentType.getId());
+			JSONArray ary2 = new JSONArray();
+			for (int j=0;j<sonTypes.size();j++){
+				Type sonType = sonTypes.get(j); 
+				
+				JSONObject obj2 = new JSONObject();
+				obj2.put("id", sonType.getId());
+				obj2.put("text", sonType.getName());
+				ary2.add(obj2);
+			}
+			obj1.put("children", ary2);
+			ary.add(obj1);
+			
+		}
+		
+		try {
+			writer.write(ary.toJSONString());
+		} catch (IOException e) {
+			e.printStackTrace();
+			log.error("列出所有菜单项出错,"+e.getMessage());
 		}
 		
 	}

@@ -52,4 +52,5 @@ public class TypeService {
 	public List<Type> findAllSonType(int id) {
 		return typeDao.findAllSonType(id);
 	}
+	
 }

@@ -27,6 +27,12 @@ isELIgnored="false"%>
 		  textField:'text'
 	  });
 	 
+	 
+	 $("#type").combotree({
+		 url: '${pageContext.request.contextPath}/type/getTypeTree.htm',   
+		 required: true
+	 });
+	 
  });
   
  
@@ -43,7 +49,7 @@ isELIgnored="false"%>
        <table>
         <tr>
          <td>文章分类:</td>
-         <td><input class="easyui-validatebox" type="text" name="type"  id="type"></td>
+         <td><input class="easyui-combotree" name="type"  id="type"></td>
         <td>作者:</td>
          <td><input  class="easyui-validatebox"id="author" required="true" disabled="disabled" value="${user.username}"></td>
          
@@ -91,7 +97,7 @@ isELIgnored="false"%>
 	   //获取百度编辑器的内容 
     	var art = editor.getContent();
     	
-	   $("#artForm").form("submit",{
+	  /* $("#artForm").form("submit",{
 		   
 		   url:"${pageContext.request.contextPath}/article/addArticle.htm",
 		   onSubmit:function(param){
@@ -107,7 +113,7 @@ isELIgnored="false"%>
 		   },
 		   success:function(info){
 			  
-   				var  data = eval('('+info+')');
+   				var  data = eval("("+info+")");
    				if (data.result){
    					$.messager.alert("info",data.msg);
    					window.location.href="${pageContext.request.contextPath}/article/articleList.htm";
@@ -116,15 +122,15 @@ isELIgnored="false"%>
    				}
 		   }
 	   });
-   }
-    	/* $.post("${pageContext.request.contextPath}/article/addArticle.htm",
+   }*/
+    	 $.post("${pageContext.request.contextPath}/article/addArticle.htm",
     			{
     		    content:art,
     		    title:$("#title").val(),
     		    url:$("#url").val(),
-    		    org :$("#org").val(),
     		    author:$("#author").val(),
-    		    tag:$("#tag").val()
+    		    tag:$("#tag").val(),
+    		    type:$("#type").val()
     			},
     			function(data){
     				
@@ -137,7 +143,7 @@ isELIgnored="false"%>
     				
     			},
     			"json");
-    } */
+    } 
    
    </script>
  

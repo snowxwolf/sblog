@@ -46,4 +46,5 @@
       <select id="findAllSonType" parameterType="Integer" resultMap="TypeMap" >
       select * from xwolf_type where parent_id=#{id};
      </select>
+    
     </mapper>

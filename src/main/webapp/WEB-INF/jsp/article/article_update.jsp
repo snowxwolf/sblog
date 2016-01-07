@@ -1,4 +1,5 @@
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"
+isELIgnored="false"%>
 <html>
  
  <head>
@@ -21,7 +22,6 @@
 	 
 	 $("#tag").combobox({
 		  url:"${pageContext.request.contextPath}/tag/findTagTree.htm",
-		  
 		  editable:false,
 		  multiple:false
 	  });
@@ -49,7 +49,7 @@
          <td>文章分类:</td>
          <td><input type="text" id="type" value="${type}"></td>
         <td>作者:</td>
-         <td><input id="author" value="${author}"></td>
+         <td><input id="author" value="${author}" disabled="disabled"></td>
          
         </tr>
         
